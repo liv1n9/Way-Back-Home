@@ -11,4 +11,8 @@ public class ButtonEvent : MonoBehaviour {
     public void Intro() {
         SceneManager.LoadScene("IntroScene");
     }
+
+    public void Quit() {
+        Application.Quit();
+    }
 }

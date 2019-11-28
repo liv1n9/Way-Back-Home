@@ -9,6 +9,7 @@ public class LevelController : MonoBehaviour {
     private Text scoreText;
     [SerializeField]
     private int level;
+
     void Start() {
         PlayerPrefs.SetInt("score", 0);
         PlayerPrefs.SetInt(string.Format("unlock_level_{0}", level), 1);

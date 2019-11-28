@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour {
     private bool ableToJump = true;
     private bool directionFlag = true;
     private float moveHorizontal = 0.0f;
-    private bool dead = false;
 
     [SerializeField]
     private Rigidbody2D monkeyBody;
@@ -18,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Update() {
         moveHorizontal = Input.GetAxis("Horizontal");
+        animator.SetBool("jumping", !ableToJump);
     }
 
     public void Move() {
@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour {
         monkeyBody.AddForce(new Vector3(0, 200, 0));
         gameObject.transform.Find("head").GetComponent<CircleCollider2D>().enabled = false;
         gameObject.transform.Find("body").GetComponent<BoxCollider2D>().enabled = false;
-        gameObject.transform.Find("foot").GetComponent<CapsuleCollider2D>().enabled = false;
+        gameObject.transform.Find("foot").GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public void SetAbleToJump(bool value) {

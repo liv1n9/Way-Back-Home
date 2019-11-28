@@ -10,6 +10,8 @@ public class StartGameController : MonoBehaviour {
     [SerializeField]
     private Button introButton;
     [SerializeField]
+    private Button quitButton;
+    [SerializeField]
     private ButtonEvent buttonEvent;
 
     void Awake() {
@@ -19,6 +21,7 @@ public class StartGameController : MonoBehaviour {
     void Start() {
         playButton.onClick.AddListener(buttonEvent.PlayGame);
         introButton.onClick.AddListener(buttonEvent.Intro);
+        quitButton.onClick.AddListener(buttonEvent.Quit);
     }
 
 }

@@ -29,12 +29,23 @@ public class PlayerController : MonoBehaviour {
         SceneManager.LoadScene(string.Format("Level{0}Scene", currentLevel));
     }
 
+    private void NextScene() {
+        int currentLevel = PlayerPrefs.GetInt("current_level");
+        Debug.Log("WTF ?" + currentLevel);
+        if (currentLevel < 3) {
+            SceneManager.LoadScene(string.Format("Level{0}Scene", currentLevel + 1));
+        } else {
+            PlayerPrefs.DeleteKey("current_level");
+            SceneManager.LoadScene("SelectLevelScene");
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision) {
         string name = collision.gameObject.name.ToLower();
         if (name.StartsWith("spike") || name.StartsWith("bottombound")) {
             Die();
         } else if (name.StartsWith("rightbound")) {
-                    
+            NextScene();
         }
     }
 
