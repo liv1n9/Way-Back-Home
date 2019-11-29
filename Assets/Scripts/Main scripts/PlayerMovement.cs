@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void Jump() {
-        if (Mathf.Abs(monkeyBody.velocity.y) > 0.0f) {
+        if (Mathf.Abs(monkeyBody.velocity.y) > 0.001) {
             ableToJump = false;
         }
         if (!ableToMove || !ableToJump) {

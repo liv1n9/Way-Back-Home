@@ -12,7 +12,7 @@ public class WaterEvent : MonoBehaviour {
     private float[] delay;
 
     [SerializeField]
-    private float speed;
+    private float speed = 2;
     [SerializeField]
     private float limit;
     [SerializeField]
@@ -27,6 +27,11 @@ public class WaterEvent : MonoBehaviour {
     private float rx;
     [SerializeField]
     private GameObject wave;
+    [SerializeField]
+    private float jumpForce = 530.0f;
+    [SerializeField]
+    private float landing = 2.0f;
+
     private void InitWater() {
         waveList = new GameObject[waveLength];
         lastIndex = waveLength - 1;
@@ -45,7 +50,7 @@ public class WaterEvent : MonoBehaviour {
         float x = lx + w * (i * 2 + 1) / 2.0f;
         fishList[i] = Instantiate(fish, new Vector3(x, -6, 0), Quaternion.identity);
         fishList[i].transform.Rotate(new Vector3(0, 0, 90));
-        fishList[i].GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 520, 0));
+        fishList[i].GetComponent<Rigidbody2D>().AddForce(new Vector3(0, jumpForce, 0));
     }
 
     private void RecreateFist() {
@@ -58,10 +63,12 @@ public class WaterEvent : MonoBehaviour {
     private void InitFish() {
         fishList = new GameObject[fishNumber];
         delay = new float[fishNumber];
+        float maxDelay = 0.0f;
         for (int i = 0; i < fishNumber; i++) {
             delay[i] = (float)random.NextDouble() * fishNumber;
+            maxDelay = Mathf.Max(maxDelay, delay[i]);
         }
-        InvokeRepeating("RecreateFist", 0.0f, 5.5f);
+        InvokeRepeating("RecreateFist", 0.0f, maxDelay + landing);
     }
 
     void Start() {

@@ -20,6 +20,7 @@ public class SoundButton : MonoBehaviour {
 
     private void TurnSound() {
         int soundOn = PlayerPrefs.GetInt("soundOn", 1) ^ 1;
+        AudioListener.volume = soundOn;
         soundButton.image.sprite = soundOn == 0 ? offSprite : onSprite;
         PlayerPrefs.SetInt("soundOn", soundOn);
     }

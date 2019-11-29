@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     private PlayerMovement movement;
 
     void Start() {
+
     }
 
     void Update() {
@@ -20,38 +21,36 @@ public class PlayerController : MonoBehaviour {
 
     private void Die() {
         movement.Die();
-        StartCoroutine(RestartScene());
+        StartCoroutine(LoseScene());
     }
 
-    IEnumerator RestartScene() {
+    IEnumerator LoseScene() {
         yield return new WaitForSeconds(2);
-        int currentLevel = PlayerPrefs.GetInt("current_level");
-        SceneManager.LoadScene(string.Format("Level{0}Scene", currentLevel));
+        SceneManager.LoadScene("LoseScene");
     }
 
-    private void NextScene() {
-        int currentLevel = PlayerPrefs.GetInt("current_level");
-        Debug.Log("WTF ?" + currentLevel);
-        if (currentLevel < 3) {
-            SceneManager.LoadScene(string.Format("Level{0}Scene", currentLevel + 1));
-        } else {
-            PlayerPrefs.DeleteKey("current_level");
-            SceneManager.LoadScene("SelectLevelScene");
-        }
+    private void WinScene() {
+        SceneManager.LoadScene("WinScene");
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         string name = collision.gameObject.name.ToLower();
-        if (name.StartsWith("spike") || name.StartsWith("bottombound")) {
+        if (name.StartsWith("spike") || name.StartsWith("bottombound") || name.StartsWith("snake")) {
             Die();
         } else if (name.StartsWith("rightbound")) {
-            NextScene();
+            WinScene();
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
         if (collision.otherCollider.name == "foot") {
             movement.SetAbleToJump(true);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision) {
+        if (collision.otherCollider.name == "foot") {
+            movement.SetAbleToJump(false);
         }
     }
 

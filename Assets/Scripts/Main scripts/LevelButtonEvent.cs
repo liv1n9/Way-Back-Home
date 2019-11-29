@@ -12,7 +12,6 @@ public class LevelButtonEvent : MonoBehaviour {
     private int level;
     void Start() {
         string levelKey = string.Format("unlock_level_{0}", level);
-        Debug.Log(levelKey);
         int unlocked = PlayerPrefs.GetInt(levelKey, 0);
         if (unlocked == 0) {
             button.interactable = false;
